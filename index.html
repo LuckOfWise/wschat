@@ -4,7 +4,9 @@
   <script type="text/javascript">
     var url = "ws://pepsi.luckofwise.com:8001";
     var websocket = new WebSocket(url, 'echo-protocol');
-
+    websocket.onmessage = function(msg) {
+      console.log(msg.data);
+    }
     //WebSocketのイベントの登録
     websocket.addEventListener("message", receiveMessage, false);
 
