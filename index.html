@@ -9,7 +9,7 @@
         var websocket = new WebSocket("ws://pepsi.luckofwise.com:8001");
 
         //WebSocketのイベントの登録
-        websocket.live("message", receiveMessage);
+        websocket.addEventListener("message", receiveMessage, false);
 
         //送信ボタンのクリックイベントの登録
         $("#button").live("click", sendMessage);
