@@ -1,35 +1,39 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script type="text/javascript">
-    var url = "ws://pepsi.luckofwise.com:8001";
-    var websocket = new WebSocket(url, 'echo-protocol');
-    websocket.onmessage = function(msg) {
-      console.log(msg.data);
-    }
-    //WebSocketのイベントの登録
-    websocket.addEventListener("message", receiveMessage, false);
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        var url = "ws://pepsi.luckofwise.com:8001";
+        var websocket = new WebSocket(url);
+        websocket.onmessage = function (msg) {
+            console.log(msg.data);
+        }
+        //WebSocketのイベントの登録
+        websocket.live("message", receiveMessage);
+//        websocket.addEventListener("message", receiveMessage, false);
 
-    //送信イベント
-    $("#button").live("click", sendMessage);
-    //message送信
-    function sendMessage() {
-      websocket.send($("#text").val());
-      console.log($("#text").val());
-      $("#text").val("");
-    }
+        //送信イベント
+        $("#button").live("click", sendMessage);
+        //message送信
+        function sendMessage() {
+            websocket.send($("#text").val());
+            console.log($("#text").val());
+            $("#text").val("");
+        }
 
-    //message受信
-    function receiveMessage(msg) {
-      console.log("receive:" + msg.data);
-      $("#receive").append(msg.data);
-      $("#receive").append("<br />");
-    }
-  </script>
+        //message受信
+        function receiveMessage(msg) {
+            console.log("receive:" + msg.data);
+            $("#receive").append(msg.data);
+            $("#receive").append("<br />");
+        }
+    </script>
 </head>
 <body>
 <input type="text" id="text">
 <input type="button" id="button" value="送信">
+
 <div id="receive">
 </div>
 </body>
