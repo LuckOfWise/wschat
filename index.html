@@ -2,35 +2,33 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
+    <title>wschat</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
-        var url = "ws://pepsi.luckofwise.com:8001";
-        var websocket = new WebSocket(url);
-        websocket.onmessage = function (msg) {
-            console.log(msg.data);
-        }
+
+        var websocket = new WebSocket("ws://pepsi.luckofwise.com:8001");
+
         //WebSocketのイベントの登録
         websocket.live("message", receiveMessage);
-//        websocket.addEventListener("message", receiveMessage, false);
 
-        //送信イベント
+        //送信ボタンのクリックイベントの登録
         $("#button").live("click", sendMessage);
+
         //message送信
         function sendMessage() {
             websocket.send($("#text").val());
-            console.log($("#text").val());
             $("#text").val("");
         }
 
         //message受信
         function receiveMessage(msg) {
-            console.log("receive:" + msg.data);
-            $("#receive").append(msg.data);
-            $("#receive").append("<br />");
+            $("#receive").prepend("<br />");
+            $("#receive").prepend(msg.data);
         }
     </script>
 </head>
 <body>
+<h3>Websocket Chat</h3>
 <input type="text" id="text">
 <input type="button" id="button" value="送信">
 
